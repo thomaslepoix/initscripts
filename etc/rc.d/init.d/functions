@@ -118,7 +118,7 @@ __kill_pids_term_kill_checkpids() {
         [ ! -e  "/proc/$pid" ] && continue
         read -r line < "/proc/$pid/stat" 2> /dev/null
 
-        stat=($line)
+        stat="${line}"
         stime=${stat[21]}
 
         [ -n "$stime" ] && [ "$base_stime" -lt "$stime" ] && continue
@@ -140,7 +140,7 @@ __kill_pids_term_kill() {
 
     # We can't initialize stat & base_stime on the same line where 'local'
     # keyword is, otherwise the sourcing of this file will fail for ksh...
-    stat=($(< /proc/self/stat))
+    stat="$(< /proc/self/stat)"
     base_stime=${stat[21]}
 
     if [ "$1" = "-d" ]; then
